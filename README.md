@@ -1,4 +1,4 @@
-# balena-tailscale-rpi
+# tailscale-balena-rpi
 
 This is an example of using the [Tailscale](https://tailscale.com/) mesh VPN on a Raspberry Pi 3 powered by [Balena](https://www.balena.io/).
 
