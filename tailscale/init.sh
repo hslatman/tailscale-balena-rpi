@@ -6,25 +6,25 @@ set -me
 
 if lsmod | grep wireguard >/dev/null 2>&1
 then
-	echo -n "wireguard version: "
-	cat /sys/module/wireguard/version
+    echo -n "wireguard version: "
+    cat /sys/module/wireguard/version
 else
-	echo "modprobe udp_tunnel..."
-	modprobe udp_tunnel
+    echo "modprobe udp_tunnel..."
+    modprobe udp_tunnel
 
-	echo "modprobe ip6_udp_tunnel..."
-	modprobe ip6_udp_tunnel
+    echo "modprobe ip6_udp_tunnel..."
+    modprobe ip6_udp_tunnel
 
     modpath="/wireguard/wireguard.ko"
 
-	echo "modinfo wireguard..."
-	modinfo "${modpath}"
-	
-	echo "insmod wireguard..."
-	if ! insmod "${modpath}"
-	then
-	 	dmesg | grep wireguard
-	fi
+    echo "modinfo wireguard..."
+    modinfo "${modpath}"
+
+    echo "insmod wireguard..."
+    if ! insmod "${modpath}"
+    then
+        dmesg | grep wireguard
+    fi
 fi
 
 if [ -z "${TAILSCALE_KEY}" ]; then
