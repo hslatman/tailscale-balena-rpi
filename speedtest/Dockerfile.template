@@ -1,0 +1,31 @@
+# This Dockerfile is roughly based on 
+# https://github.com/librespeed/speedtest-go/blob/01347b8514bed630add9519e99154d847a1ca531/Dockerfile
+# and has been adapted to work with Balena
+ARG BALENA_MACHINE_NAME_ARG=%%BALENA_MACHINE_NAME%%
+
+FROM balenalib/$BALENA_MACHINE_NAME_ARG-alpine-golang:build as builder
+
+RUN install_packages git \
+&& mkdir -p /go/src/github.com/librespeed/ \
+&& cd /go/src/github.com/librespeed/ \
+&& git clone https://github.com/librespeed/speedtest-go.git
+
+WORKDIR /go/src/github.com/librespeed/speedtest-go
+
+RUN go get ./ && go build -ldflags "-w -s" -trimpath -o speedtest main.go
+
+FROM balenalib/$BALENA_MACHINE_NAME_ARG-alpine:run
+
+RUN install_packages ca-certificates
+
+WORKDIR /app
+
+COPY --from=builder /go/src/github.com/librespeed/speedtest-go/speedtest .
+COPY --from=builder /go/src/github.com/librespeed/speedtest-go/assets ./assets
+COPY --from=builder /go/src/github.com/librespeed/speedtest-go/assets/example-singleServer-gauges.html ./assets/index.html
+COPY --from=builder /go/src/github.com/librespeed/speedtest-go/settings.toml .
+
+# The default port for speedtest-go
+EXPOSE 8989
+
+CMD ["./speedtest"]
