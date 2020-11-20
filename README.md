@@ -7,7 +7,7 @@ This is an example of using the [Tailscale](https://tailscale.com/) mesh VPN on 
 This repository contains an example for running [Tailscale](https://tailscale.com/) on a Raspberry Pi 3.
 Tailscale is a system that makes it easy to manage the configuration of many devices in a WireGuard VPN setup.
 WireGuard is a modern mesh VPN implementation that requires tunnel configurations to be configured on each device.
-This is what Tailscale makes easy and reliable on a global scale using 
+This is what Tailscale makes easy and reliable on a global scale using a centralized control plane.
 
 Tailscale is managed by Balena, an IoT platform for managing and deploying applications to IoT devices.
 It is built on top of Docker, the Yocto project and other open source technologies.
@@ -41,7 +41,7 @@ $ balena push <application>
 This can take a while, depending on internet speeds, speed of the Balena builders and whether (some of your) layers were cached before.
 
 After the build process is finished and your device has downloaded the updated images, the `tailscale` and `speedtest` services will be started.
-The first time the `tailscale` service will exit early, because the `TAILSCALE_KEY` environment variable is not set and `tailscaile` will thus not be able to authenticate itself to the Tailscale servers.
+The first time the `tailscale` service will exit early, because the `TAILSCALE_KEY` environment variable is not set and `tailscale` will thus not be able to authenticate itself to the Tailscale servers.
 You can create a (reusable) key [here](https://login.tailscale.com/admin/authkeys).
 After creating a key, it should be made available as a `Service Variable` for the `tailscale` service in your application in Balena.
 After adding the variable, the `tailscale` service will restart and it should show logs similar to the following in the Balena web console:
