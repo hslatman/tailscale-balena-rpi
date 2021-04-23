@@ -4,16 +4,16 @@ This is an example of using the [Tailscale](https://tailscale.com/) mesh VPN on 
 
 ## Description
 
-This repository contains an example for running [Tailscale](https://tailscale.com/) on a Raspberry Pi 3.
+This repository contains an example for running [Tailscale](https://tailscale.com/) on a Raspberry Pi 3 (or 2).
 Tailscale is a system that makes it easy to manage the configuration of many devices in a WireGuard VPN setup.
 WireGuard is a modern mesh VPN implementation that requires tunnel configurations to be configured on each device.
 This is what Tailscale makes easy and reliable on a global scale using a centralized control plane.
 
-Tailscale is managed by Balena, an IoT platform for managing and deploying applications to IoT devices.
-It is built on top of Docker, the Yocto project and other open source technologies.
+The Tailscale node is managed by Balena, an IoT platform for managing and deploying applications to IoT devices.
+Balena is built on top of Docker, the Yocto project and other open source technologies.
 
 The [Go clone](https://github.com/librespeed/speedtest-go) of the Librespeed [speedtest](https://github.com/librespeed/speedtest) application has been included as a demo application of what is possible when setting up a WireGuard tunnel configured by Tailscale. 
-The `speedtest` service can be used to test the performance of your WireGuard VPN connection.
+The `speedtest` service can be used to test the performance of your Tailscale (well, WireGuard) VPN connection.
 
 ## Running
 
@@ -21,12 +21,12 @@ Requirements:
 
 * A [Balena](https://www.balena.io/cloud/) account
 * A [Tailscale](https://tailscale.com/) account
-* A Raspberry Pi (this project has been tested with a RPi 3)
+* A Raspberry Pi (this project has been tested with RPi 2 and 3)
 * [Another device](https://tailscale.com/download) with Tailscale installed
 
 You need to create a new Balena application or use an existing one and prepare an SD Card with BalenaOS.
-The example has currently only been tested with a Raspberry Pi 3 and BalenaOS version `2.60.1+rev1.prod`. 
-In case a different BalenaOS version is used, the `tailscale` Dockerfile.template should be updated to use this different version also, otherwise there may be issues when retrieving the kernel headers or compiling the WireGuard kernel module. 
+The example has currently been tested successfully with a Raspberry Pi 3 (using BalenaOS versions `2.60.1+rev1.prod` and `balenaOS 2.56.0+rev2.prod`) and a Raspberry Pi 2 (using BalenaOS `2.48.0+rev1.prod`) using the current Dockerfile.template file.
+In case a different BalenaOS version is used, the `tailscale` Dockerfile.template _may_ have to be updated to use a different version also, otherwise there may be issues when retrieving the kernel headers or compiling the WireGuard kernel module. 
 
 Using the Balena CLI you can run this project as follows:
 
