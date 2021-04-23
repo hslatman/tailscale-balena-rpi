@@ -4,7 +4,7 @@ This is an example of using the [Tailscale](https://tailscale.com/) mesh VPN on 
 
 ## Description
 
-This repository contains an example for running [Tailscale](https://tailscale.com/) on a Raspberry Pi 3 (or 2).
+This repository contains an example for running [Tailscale](https://tailscale.com/) on a Raspberry Pi 3.
 Tailscale is a system that makes it easy to manage the configuration of many devices in a WireGuard VPN setup.
 WireGuard is a modern mesh VPN implementation that requires tunnel configurations to be configured on each device.
 This is what Tailscale makes easy and reliable on a global scale using a centralized control plane.
@@ -21,12 +21,21 @@ Requirements:
 
 * A [Balena](https://www.balena.io/cloud/) account
 * A [Tailscale](https://tailscale.com/) account
-* A Raspberry Pi (this project has been tested with RPi 2 and 3)
+* A Raspberry Pi (this project has been tested with RPi 3)
 * [Another device](https://tailscale.com/download) with Tailscale installed
 
-You need to create a new Balena application or use an existing one and prepare an SD Card with BalenaOS.
-The example has currently been tested successfully with a Raspberry Pi 3 (using BalenaOS versions `2.60.1+rev1.prod` and `balenaOS 2.56.0+rev2.prod`) and a Raspberry Pi 2 (using BalenaOS `2.48.0+rev1.prod`) using the current Dockerfile.template file.
-In case a different BalenaOS version is used, the `tailscale` Dockerfile.template _may_ have to be updated to use a different version also, otherwise there may be issues when retrieving the kernel headers or compiling the WireGuard kernel module. 
+You need to create a new Balena application or use an existing one and prepare an SD Card with balenaOS.
+The example has currently been tested successfully with a Raspberry Pi 3 (using balenaOS versions `2.60.1+rev1.prod` and `balenaOS 2.56.0+rev2.prod`) using the current Dockerfile.template file.
+In case a different balenaOS version is used, the `tailscale` Dockerfile.template _may_ have to be updated to use a different version also, otherwise there may be issues when retrieving the kernel headers or compiling the WireGuard kernel module. 
+For example, when using a Raspberry Pi 2 with balenaOS `2.48.0+rev1.prod`, errors similar to the following can pop up in the Balena logs:
+
+```bash
+tailscale  insmod wireguard...
+tailscale  insmod: ERROR: could not insert module /wireguard/wireguard.ko: Invalid module format
+tailscale  [  237.670251] wireguard: disagrees about version of symbol module_layout
+```
+
+Tailscale may still work, but without a kernel module to run WireGuard.
 
 Using the Balena CLI you can run this project as follows:
 
